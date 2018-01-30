@@ -1,7 +1,8 @@
 var router = require('express').Router();
 var sequelize = require('../db.js');
 var User = sequelize.import('../models/user');
-
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 
 router.post('/', function(req, res){
 
@@ -9,12 +10,14 @@ router.post('/', function(req, res){
     var pass = req.body.user.password; //TODO: hash this pw
     User.create({
         username: username,
-        passwordhash: '' //TODO: make it hashed
+        passwordhash:bcrypt.hashSync(pass,10) //TODO: make it hashed
     }).then(
         function createSuccess(user){
+            var token = jwt.sign({id: user.id}, "i_am_secret", {expiresIn: 60*60*24});
             res.json({
                 user: user,
-                message: 'created'
+                message: 'created',
+                sessionToken: token
             });
         },
         function createError(err){
