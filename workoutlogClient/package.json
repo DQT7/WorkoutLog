@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./node_module/http-server/bin/http-server"
+    "start": "node ./node_modules/http-server/bin/http-server"
   },
   "author": " DeQuon Turner",
-  "license": "ISC"
+  "license": "ISC",
   "devDependencies": {
     "http-server": "^0.10.0"
   }
