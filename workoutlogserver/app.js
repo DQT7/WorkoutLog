@@ -1,4 +1,5 @@
 
+require('dotenv').config();
 let express = require("express");
 const path = require('path');
 var app = express();
@@ -14,12 +15,13 @@ User.sync();
 // user.sync({force:true});
 app.use(bodyParser.json());
 app.use(require('./middleware/headers'));
+app.use(require('./middleware/validate-session'));
 app.use('/api/user', require('./routes/user'));
 //login route
 app.use('/api/login', require('./routes/session'));
-app.use('/api/test', function(req,res){
-    res.send('Hello World')
-})
+app.use('/api/definition', require('./routes/definition'));
+app.use('/api/log', require('./routes/log'));
+
 app.listen(3000, function(){
     console.log("app is open on 3000!");
 })
