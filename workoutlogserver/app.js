@@ -1,10 +1,11 @@
 
 let express = require("express");
+const path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
 var sequelize = require('./db.js');
 
-var User = sequelize.import(__dirname + '\\models\\user');
+var User = sequelize.import(path.join(__dirname, 'models', 'user'));
 
 
 
