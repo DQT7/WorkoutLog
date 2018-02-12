@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    image: smola1022/workoutlog:app-db
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - webnet
+  server:
+    image: smola1022/workoutlog:app-server
+    depends_on:
+      - db
+    environment:
+      - DB_USER=trainer
+      - DB_PASS=password
+      - DB_HOST=db
+    ports:
+      - "3000:3000"
+    networks:
+      - webnet
+  web:
+    image: smola1022/workoutlog:app-client
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+    - "80:8080"
+    networks:
+      - webnet
+networks:
+  webnet:
